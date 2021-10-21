@@ -1,15 +1,10 @@
 import jwt, { Secret } from "jsonwebtoken";
-import { Request, Response, NextFunction, RequestHandler } from "express";
-
-declare module "jsonwebtoken" {
-  export interface JwtPayload {
-    user: string;
-  }
-}
+import { Request, Response, NextFunction } from "express";
 
 module.exports = function (req: Request, res: Response, next: NextFunction) {
   //Get token
   const token = req.header("x-auth-token");
+
   if (!token) {
     return res
       .status(401)
@@ -19,6 +14,7 @@ module.exports = function (req: Request, res: Response, next: NextFunction) {
     const decoded: any = jwt.verify(token, process.env.JWT_SECRET as Secret);
 
     req.user = decoded.user;
+    next();
   } catch (error: any) {
     if (error.message) {
       console.log(error.message);
@@ -26,4 +22,4 @@ module.exports = function (req: Request, res: Response, next: NextFunction) {
 
     res.status(401).json({ msg: "Invalid token." });
   }
-} as RequestHandler;
+};

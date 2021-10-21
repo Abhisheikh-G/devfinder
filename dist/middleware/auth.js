@@ -7,6 +7,7 @@ var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 module.exports = function (req, res, next) {
     //Get token
     var token = req.header("x-auth-token");
+    console.log("Inside middleware..");
     if (!token) {
         return res
             .status(401)
@@ -15,6 +16,7 @@ module.exports = function (req, res, next) {
     try {
         var decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
         req.user = decoded.user;
+        next();
     }
     catch (error) {
         if (error.message) {
