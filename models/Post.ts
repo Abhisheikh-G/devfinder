@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const PostSchema = new mongoose.Schema({
   user: {
@@ -50,5 +50,5 @@ const PostSchema = new mongoose.Schema({
     default: Date.now(),
   },
 });
-
-module.exports = Post = mongoose.model("post", PostSchema);
+const Post = mongoose.model("post", PostSchema);
+module.exports = Post;
