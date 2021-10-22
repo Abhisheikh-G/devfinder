@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "rootDir": "./",
+    "rootDir": "./src",
     "moduleResolution": "node",
     "typeRoots": ["types", "node_modules/@types"],
     "allowJs": true,
@@ -12,6 +12,6 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["routes", "utils", "middleware"],
-  "files": ["server.ts", "@types/index.d.ts", "@types/jwt.d.ts"]
+  "include": ["src"],
+  "files": ["@types/index.d.ts", "@types/jwt.d.ts"]
 }
