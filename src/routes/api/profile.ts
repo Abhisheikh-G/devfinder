@@ -1,15 +1,15 @@
 import express, { Request, Response } from "express";
 import { check, validationResult } from "express-validator";
-const router = express.Router();
 import auth from "../../middleware/auth";
 import User from "../../models/User";
 import Profile from "../../models/Profile";
 import request from "request";
+const profileRouter = express.Router();
 
 // @route GET api/profile/me
 // @desc Get current users profile
 // @access Private
-router.get("/me", auth, async (req, res) => {
+profileRouter.get("/me", auth, async (req, res) => {
   try {
     const profile = await Profile.findOne({ user: req.user!.id }).populate(
       "user",
@@ -47,7 +47,7 @@ interface Profile {
 // @route POST api/profile
 // @desc Create or update user profile
 // @access Private
-router.post(
+profileRouter.post(
   "/",
   [
     auth,
@@ -138,7 +138,7 @@ router.post(
 // @route GET api/profile
 // @desc Get all profiles
 // @access Public
-router.get("/", async (req: Request, res: Response) => {
+profileRouter.get("/", async (req: Request, res: Response) => {
   try {
     const profiles = await Profile.find().populate("user", ["name", "avatar"]);
     res.status(200).json(profiles);
@@ -151,7 +151,7 @@ router.get("/", async (req: Request, res: Response) => {
 // @route GET api/profile/user/:user_id
 // @desc Get profile by user ID
 // @access Public
-router.get("/user/:user_id", async (req: Request, res: Response) => {
+profileRouter.get("/user/:user_id", async (req: Request, res: Response) => {
   try {
     const profile = await Profile.findOne({
       user: req.params.user_id,
@@ -169,7 +169,7 @@ router.get("/user/:user_id", async (req: Request, res: Response) => {
 // @route DELETE api/profile
 // @desc Delete profile, user, and posts
 // @access Private
-router.delete("/", auth, async (req: Request, res: Response) => {
+profileRouter.delete("/", auth, async (req: Request, res: Response) => {
   try {
     //remove users posts
 
@@ -191,7 +191,7 @@ router.delete("/", auth, async (req: Request, res: Response) => {
 // @route PUT api/profile/experience
 // @desc Add profile experience
 // @access Private
-router.put(
+profileRouter.put(
   "/experience",
   [
     auth,
@@ -232,7 +232,7 @@ router.put(
 // @route DELETE api/profile/experience/:exp_id
 // @desc Delete profile experience by id
 // @access Private
-router.delete("/experience/:exp_id", auth, async (req, res) => {
+profileRouter.delete("/experience/:exp_id", auth, async (req, res) => {
   try {
     const profile = await Profile.findOne({ user: req.user!.id });
     const removeIndex = profile.experience
@@ -251,7 +251,7 @@ router.delete("/experience/:exp_id", auth, async (req, res) => {
 // @route PUT api/profile/education
 // @desc Add profile education
 // @access Private
-router.put(
+profileRouter.put(
   "/education",
   [
     auth,
@@ -292,7 +292,7 @@ router.put(
 // @route DELETE api/profile/education/:edu_id
 // @desc Delete profile education by id
 // @access Private
-router.delete(
+profileRouter.delete(
   "/education/:edu_id",
   auth,
   async (req: Request, res: Response) => {
@@ -315,7 +315,7 @@ router.delete(
 // @route DELETE api/profile/github/:username
 // @desc Get user repos from Github
 // @access Public
-router.get("/github/:username", async (req: Request, res: Response) => {
+profileRouter.get("/github/:username", async (req: Request, res: Response) => {
   try {
     const options = {
       uri: `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc&client_id=${process.env.GITHUB_CLIENT}&client_secret=${process.env.GITHUB_SECRET}`,
@@ -336,4 +336,4 @@ router.get("/github/:username", async (req: Request, res: Response) => {
   }
 });
 
-module.exports = router;
+export default profileRouter;

@@ -76,4 +76,4 @@ authRouter.post(
   }
 );
 
-module.exports = authRouter;
+export default authRouter;

@@ -1,16 +1,16 @@
 import express, { Request, Response } from "express";
-const router = express.Router();
 import auth from "../../middleware/auth";
 import { check, validationResult } from "express-validator";
 
 import User from "../../models/User";
 import Post from "../../models/Post";
 import Profile from "../../models/Profile";
+const postsRouter = express.Router();
 
 // @route POST api/posts
 // @desc Create a post
 // @access Private
-router.post(
+postsRouter.post(
   "/",
   [auth, check("text", "Text is required to make a post.").not().isEmpty()],
   async (req: Request, res: Response) => {
@@ -41,7 +41,7 @@ router.post(
 // @route GET api/posts/:id
 // @desc Get all posts
 // @access Private
-router.get("/", auth, async (req: Request, res: Response) => {
+postsRouter.get("/", auth, async (req: Request, res: Response) => {
   try {
     const posts = await Post.find().sort({ date: -1 });
     if (!posts) return res.status(404).json({ msg: "Posts not found." });
@@ -55,7 +55,7 @@ router.get("/", auth, async (req: Request, res: Response) => {
 // @route GET api/posts/:id
 // @desc Get post by id
 // @access Private
-router.get("/:id", auth, async (req: Request, res: Response) => {
+postsRouter.get("/:id", auth, async (req: Request, res: Response) => {
   try {
     const post = await Post.findById(req.params.id).sort({ date: -1 });
     if (!post) return res.status(404).json({ msg: "Post not found." });
@@ -72,7 +72,7 @@ router.get("/:id", auth, async (req: Request, res: Response) => {
 // @route DELETE api/posts/:id
 // @desc Delete post by id
 // @access Private
-router.delete("/:id", auth, async (req: Request, res: Response) => {
+postsRouter.delete("/:id", auth, async (req: Request, res: Response) => {
   try {
     const post = await Post.findById(req.params.id);
 
@@ -101,7 +101,7 @@ interface Like {
 // @route PUT api/posts/like/:id
 // @desc Like post by id
 // @access Private
-router.put("/like/:id", auth, async (req: Request, res: Response) => {
+postsRouter.put("/like/:id", auth, async (req: Request, res: Response) => {
   try {
     const post = await Post.findById(req.params.id);
     if (
@@ -126,7 +126,7 @@ router.put("/like/:id", auth, async (req: Request, res: Response) => {
 // @route PUT api/posts/unlike/:id
 // @desc Unlike post by id
 // @access Private
-router.put("/unlike/:id", auth, async (req: Request, res: Response) => {
+postsRouter.put("/unlike/:id", auth, async (req: Request, res: Response) => {
   try {
     const post = await Post.findById(req.params.id);
     if (
@@ -157,7 +157,7 @@ router.put("/unlike/:id", auth, async (req: Request, res: Response) => {
 // @route POST api/posts/comment/:id
 // @desc Comment on a post
 // @access Private
-router.post(
+postsRouter.post(
   "/comment/:id",
   [auth, check("text", "Text is required to make a post.").not().isEmpty()],
   async (req: Request, res: Response) => {
@@ -195,7 +195,7 @@ interface Comment {
 // @route DELETE api/posts/comment/:id/:comment_id
 // @desc Delete comment by post id and comment id
 // @access Private
-router.delete(
+postsRouter.delete(
   "/comment/:id/:comment_id",
   auth,
   async (req: Request, res: Response) => {
@@ -230,4 +230,5 @@ router.delete(
     }
   }
 );
-module.exports = router;
+
+export default postsRouter;

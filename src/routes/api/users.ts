@@ -5,12 +5,12 @@ import { check, validationResult } from "express-validator";
 import gravatar from "gravatar";
 import bcrypt from "bcryptjs";
 import jwt, { Secret } from "jsonwebtoken";
-const router = express.Router();
+const usersRouter = express.Router();
 
 // @route POST api/users
 // @desc Register user
 // @access Public
-router.post(
+usersRouter.post(
   "/",
   [
     check("name", "Name is required").not().isEmpty(),
@@ -77,4 +77,4 @@ router.post(
   }
 );
 
-module.exports = router;
+export default usersRouter;
