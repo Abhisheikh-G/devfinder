@@ -1,6 +1,7 @@
-import { configureStore, applyMiddleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 import counterReducer from "src/reducers/counterSlice";
+import alertReducer from "src/reducers/alertSlice";
 
 // import { composeWithDevTools } from "redux-devtools-extension";
 // ...
@@ -11,6 +12,7 @@ const middleware = [thunk];
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
+    alert: alertReducer,
   },
   middleware,
 });
