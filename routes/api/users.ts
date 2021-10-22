@@ -1,11 +1,12 @@
-const User = require("../../models/User");
+import User from "../../models/User";
 
-const express = require("express");
+import express, { Request, Response } from "express";
+import { check, validationResult } from "express-validator";
+import gravatar from "gravatar";
+import bcrypt from "bcryptjs";
+import jwt, { Secret } from "jsonwebtoken";
 const router = express.Router();
-const { check, validationResult } = require("express-validator");
-const gravatar = require("gravatar");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+
 // @route POST api/users
 // @desc Register user
 // @access Public
@@ -19,7 +20,7 @@ router.post(
       "Please enter a password with 6 or more characters."
     ).isLength({ min: 6 }),
   ],
-  async (req, res) => {
+  async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -62,14 +63,14 @@ router.post(
 
       jwt.sign(
         payload,
-        process.env.JWT_SECRET,
+        process.env.JWT_SECRET as Secret,
         { expiresIn: 36000 * 24 },
         (err, token) => {
           if (err) throw err;
           return res.status(200).json({ token });
         }
       );
-    } catch (error) {
+    } catch (error: any) {
       console.log(error.message);
       res.status(500).send("Server error.");
     }
