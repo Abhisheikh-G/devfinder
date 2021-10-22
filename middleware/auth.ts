@@ -1,7 +1,7 @@
 import jwt, { Secret } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 
-module.exports = function (req: Request, res: Response, next: NextFunction) {
+export default function (req: Request, res: Response, next: NextFunction) {
   //Get token
   const token = req.header("x-auth-token");
 
@@ -22,4 +22,4 @@ module.exports = function (req: Request, res: Response, next: NextFunction) {
 
     res.status(401).json({ msg: "Invalid token." });
   }
-};
+}
