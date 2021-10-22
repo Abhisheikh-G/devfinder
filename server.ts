@@ -1,12 +1,15 @@
-const express = require("express");
-const app = express();
-const PORT = process.env.PORT || 5000;
+import express from "express";
 import { connectDB } from "./utils/db";
-require("dotenv").config();
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const PORT = process.env.PORT || 5000;
+const app = express();
 
 connectDB();
 //Init Middleware
-app.use(express.json({ extended: false }));
+app.use(express.json({}));
 
 //Define routes
 app.use("/api/users", require("./routes/api/users"));
