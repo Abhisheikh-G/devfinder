@@ -1,13 +1,14 @@
 import { Fragment, ChangeEvent, useState, FormEvent } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { setAlert } from "../../reducers/alertSlice";
+import { setAlert } from "../../slices/alertSlice";
+import { registerUser } from "../../slices/registerSlice";
 
 interface RegisterForm {
   name: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
 }
 
 const defaultState: RegisterForm = {
@@ -36,15 +37,37 @@ const Register = () => {
           msg: "Passwords do not match.",
         })
       );
-      console.log("Passwords do not much.");
     } else {
       try {
-        console.log("Success");
-        // const body = JSON.stringify({ name, email, password });
-        // const res = await axios.post("/api/users", body, {
-        //   headers: { "Content-Type": "application/json" },
-        // });
-        // console.log(res.data);
+        const res = await fetch(`http://localhost:5000/api/users`, {
+          method: "POST",
+          body: JSON.stringify({ name, email, password }),
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": `${process.env.REACT_APP_API_URL}`,
+          },
+          mode: "cors",
+        });
+
+        const { errors, token } = await res.json();
+
+        if (res.status > 300) {
+          if (errors)
+            errors.forEach((error: { msg: string }) => {
+              const { msg } = error;
+              dispatch(setAlert({ msg: msg, alertType: "danger" }));
+            });
+        }
+        if (res.status === 200) {
+          dispatch(registerUser(token));
+          dispatch(
+            setAlert({
+              alertType: "success",
+              id: "",
+              msg: "Successfully registered",
+            })
+          );
+        }
       } catch (error: any) {
         console.log(error.response);
       }

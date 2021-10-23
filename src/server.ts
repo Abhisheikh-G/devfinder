@@ -5,6 +5,7 @@ import usersRoute from "./routes/api/users";
 import authRoute from "./routes/api/auth";
 import postsRoute from "./routes/api/posts";
 import profileRoute from "./routes/api/profile";
+import cors from "cors";
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ const app = express();
 connectDB();
 //Init Middleware
 app.use(express.json({}));
+app.use(cors());
 
 //Define routes
 app.use("/api/users", usersRoute);

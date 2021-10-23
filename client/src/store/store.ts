@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
-import counterReducer from "src/reducers/counterSlice";
-import alertReducer from "src/reducers/alertSlice";
+import alertReducer from "src/slices/alertSlice";
+import registerReducer from "src/slices/registerSlice";
 
 // import { composeWithDevTools } from "redux-devtools-extension";
 // ...
@@ -11,10 +11,11 @@ const middleware = [thunk];
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     alert: alertReducer,
+    register: registerReducer,
   },
-  middleware,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

@@ -1,6 +1,6 @@
 import { Fragment, FC, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAlerts, removeAlert } from "src/reducers/alertSlice";
+import { selectAlerts, removeAlert } from "src/slices/alertSlice";
 
 const Alert: FC = () => {
   const dispatch = useDispatch();
