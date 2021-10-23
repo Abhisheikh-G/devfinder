@@ -1,5 +1,7 @@
 import { Fragment, ChangeEvent, useState, FormEvent } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { setAlert } from "../../reducers/alertSlice";
 
 interface RegisterForm {
   name: string;
@@ -17,6 +19,7 @@ const defaultState: RegisterForm = {
 
 const Register = () => {
   const [formData, setFormData] = useState(defaultState);
+  const dispatch = useDispatch();
   const { name, email, password, confirmPassword } = formData;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,6 +29,13 @@ const Register = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (password !== confirmPassword) {
+      dispatch(
+        setAlert({
+          alertType: "danger",
+          id: "",
+          msg: "Passwords do not match.",
+        })
+      );
       console.log("Passwords do not much.");
     } else {
       try {
