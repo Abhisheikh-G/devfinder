@@ -1,10 +1,10 @@
 import { useHistory } from "react-router-dom";
 
-export default function Redirect({
-  authenticated,
-}: {
+interface Props {
   authenticated: boolean;
-}) {
+}
+
+export default function Redirect({ authenticated }: Props) {
   const history = useHistory();
   const redirect = setTimeout(() => {
     history.push("/");
