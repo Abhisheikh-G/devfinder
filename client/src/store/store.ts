@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 import alertReducer from "src/slices/alertSlice";
-import registerReducer from "src/slices/registerSlice";
+import authReducer from "src/slices/authSlice";
 
 // import { composeWithDevTools } from "redux-devtools-extension";
 // ...
@@ -12,7 +12,7 @@ const middleware = [thunk];
 export const store = configureStore({
   reducer: {
     alert: alertReducer,
-    register: registerReducer,
+    auth: authReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(middleware),

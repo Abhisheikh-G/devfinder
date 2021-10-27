@@ -1,8 +1,11 @@
 import { Fragment, ChangeEvent, useState, FormEvent } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { setAlert } from "../../slices/alertSlice";
-import { registerUser } from "../../slices/registerSlice";
+import { registerUser, selectIsAuthenticated } from "../../slices/authSlice";
+import withAuth from "../../hooks/withAuth";
+import Redirect from "../utils/Redirect";
+import { RootState } from "src/store/store";
 
 interface RegisterForm {
   name: string;
@@ -22,6 +25,11 @@ const Register = () => {
   const [formData, setFormData] = useState(defaultState);
   const dispatch = useDispatch();
   const { name, email, password, confirmPassword } = formData;
+  const authenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
+
+  // if (!authenticated) return <Redirect authenticated={authenticated!} />;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -136,4 +144,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default withAuth(Register);
