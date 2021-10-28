@@ -1,11 +1,11 @@
-import { Fragment, ChangeEvent, useState, FormEvent } from "react";
-import { useDispatch } from "react-redux";
+import { Fragment, ChangeEvent, useState, FormEvent, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { setAlert } from "../../slices/alertSlice";
 import { registerUser } from "../../slices/authSlice";
 import withAuth from "../../hooks/withAuth";
-// import Redirect from "../utils/Redirect";
-// import { RootState } from "src/store/store";
+import { RootState } from "src/store/store";
+import { useHistory } from "react-router-dom";
 
 interface RegisterForm {
   name: string;
@@ -24,12 +24,15 @@ const defaultState: RegisterForm = {
 const Register = () => {
   const [formData, setFormData] = useState(defaultState);
   const dispatch = useDispatch();
+  const history = useHistory();
   const { name, email, password, confirmPassword } = formData;
-  // const authenticated = useSelector(
-  //   (state: RootState) => state.auth.isAuthenticated
-  // );
+  const authenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
 
-  // if (!authenticated) return <Redirect authenticated={authenticated!} />;
+  useEffect(() => {
+    if (authenticated) history.push("/");
+  }, [authenticated, history]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

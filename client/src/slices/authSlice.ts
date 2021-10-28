@@ -29,10 +29,22 @@ export const authSlice = createSlice({
       state.isAuthenticated = true;
       state.user = action.payload;
     },
+    signUserIn: (state, action: PayloadAction<string>) => {
+      localStorage.setItem("token", action.payload);
+      state.token = action.payload;
+      state.isAuthenticated = true;
+    },
+    signUserOut: (state) => {
+      localStorage.removeItem("token");
+      state.token = "";
+      state.isAuthenticated = false;
+      state.user = null;
+    },
   },
 });
 
-export const { registerUser, loadUser } = authSlice.actions;
+export const { registerUser, loadUser, signUserIn, signUserOut } =
+  authSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectToken = (state: RootState) => state.auth.token;

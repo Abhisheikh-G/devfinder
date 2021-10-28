@@ -1,5 +1,10 @@
-import { Fragment, ChangeEvent, useState, FormEvent } from "react";
+import { Fragment, ChangeEvent, useState, FormEvent, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setAlert } from "../../slices/alertSlice";
+import { signUserIn } from "../../slices/authSlice";
+import { useHistory } from "react-router-dom";
+import { RootState } from "src/store/store";
 
 interface LogInForm {
   email: string;
@@ -14,24 +19,66 @@ const defaultState: LogInForm = {
 const LogIn = () => {
   const [formData, setFormData] = useState(defaultState);
   const { email, password } = formData;
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const authenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  useEffect(() => {
+    if (authenticated) history.push("/");
+  }, [authenticated, history]);
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!password) {
-      console.log("Passwords do not much.");
+    if (!password || !email) {
+      dispatch(
+        setAlert({
+          alertType: "danger",
+          id: "",
+          msg: "Fields cannot be empty.",
+        })
+      );
     } else {
       try {
-        console.log("Success");
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/auth`, {
+          method: "POST",
+          body: JSON.stringify({ email, password }),
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": `${process.env.REACT_APP_API_URL}`,
+          },
+          mode: "cors",
+        });
+
+        const { errors, token } = await res.json();
+
+        if (res.status > 300) {
+          if (errors)
+            errors.forEach((error: { msg: string }) => {
+              const { msg } = error;
+              dispatch(setAlert({ msg: msg, alertType: "danger" }));
+            });
+        }
+        if (res.status === 200) {
+          dispatch(signUserIn(token));
+          dispatch(
+            setAlert({
+              alertType: "success",
+              id: "",
+              msg: "Successfully signed in",
+            })
+          );
+        }
       } catch (error: any) {
         console.log(error.response);
       }
     }
   };
-
   return (
     <Fragment>
       <h1 className="large text-primary">Sign In</h1>

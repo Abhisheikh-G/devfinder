@@ -1,15 +1,11 @@
 import { useHistory } from "react-router-dom";
 
-interface Props {
-  authenticated: boolean;
-}
-
-export default function Redirect({ authenticated }: Props) {
+export default function Redirect() {
   const history = useHistory();
   const redirect = setTimeout(() => {
     history.push("/");
   }, 2000);
-  return !authenticated ? (
+  return (
     <div
       style={{
         display: "flex",
@@ -22,7 +18,5 @@ export default function Redirect({ authenticated }: Props) {
       <h3>Sorry, you aren't authenticated to do that. </h3>
       <span style={{ display: "none" }}>{redirect}</span>
     </div>
-  ) : (
-    <span></span>
   );
 }
