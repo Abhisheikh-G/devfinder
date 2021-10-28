@@ -1,30 +1,6 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { loadUser } from "../../slices/authSlice";
 
 function LandingPage() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    async function getUser() {
-      if (localStorage.getItem("token")) {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/auth`, {
-          headers: {
-            "x-auth-token": localStorage.getItem("token")!,
-          },
-        });
-        const data = await res.json();
-        if (res.status > 300) {
-          localStorage.removeItem("token");
-        } else {
-          dispatch(loadUser(data));
-        }
-      } else {
-        localStorage.removeItem("token");
-      }
-    }
-    getUser();
-  }, [dispatch]);
   return (
     <section className="landing">
       <div className="dark-overlay">

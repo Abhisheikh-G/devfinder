@@ -35,7 +35,7 @@ function Navbar() {
           <>
             {user !== null && (
               <li>
-                <Link to="/profile">{user.name}'s Profile</Link>
+                <Link to="/dashboard">{user.name}'s Profile</Link>
               </li>
             )}
 

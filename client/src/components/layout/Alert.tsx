@@ -11,7 +11,7 @@ const Alert: FC = () => {
     alerts.forEach((alert) => {
       setTimeout(() => {
         if (alert?.id) dispatch(removeAlert(alert.id));
-      }, 5000);
+      }, 3500);
     });
   }, [alerts, dispatch]);
 

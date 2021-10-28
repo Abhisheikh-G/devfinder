@@ -6,32 +6,21 @@ import LandingPage from "./components/layout/LandingPage";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Alert from "./components/layout/Alert";
+import Dashboard from "./components/dashboard/Dashboard";
 import { loadUser } from "./slices/authSlice";
+import { useHistory } from "react-router-dom";
+import { setAlert } from "./slices/alertSlice";
 // import { setAlert } from "./slices/alertSlice";
 import { useDispatch } from "react-redux";
+import { getUser } from "./actions/auth";
 
 const App = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   useEffect(() => {
-    async function getUser() {
-      if (localStorage.getItem("token")) {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/auth`, {
-          headers: {
-            "x-auth-token": localStorage.getItem("token")!,
-          },
-        });
-        const data = await res.json();
-        if (res.status > 300) {
-          localStorage.removeItem("token");
-        } else {
-          dispatch(loadUser(data));
-        }
-      } else {
-        localStorage.removeItem("token");
-      }
-    }
-    getUser();
-  }, [dispatch]);
+    let redirect = false;
+    getUser({ dispatch, setAlert, history, loadUser, redirect });
+  }, [dispatch, history]);
 
   return (
     <Router>
@@ -43,6 +32,7 @@ const App = () => {
           <Switch>
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/dashboard" component={Dashboard} />
           </Switch>
         </section>
       </Fragment>
