@@ -17,7 +17,7 @@ profileRouter.get("/me", auth, async (req, res) => {
     );
     if (!profile)
       return res
-        .status(400)
+        .status(360)
         .json({ msg: "There is no profile for this user." });
 
     res.status(200).json(profile);

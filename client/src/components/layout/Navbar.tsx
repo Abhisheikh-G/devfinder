@@ -33,14 +33,12 @@ function Navbar() {
           </>
         ) : (
           <>
-            {user !== null && (
-              <li>
-                <Link to="/dashboard">{user.name}'s Profile</Link>
-              </li>
-            )}
-
+            <li>
+              <Link to="/dashboard">Dashboard</Link>
+            </li>
             <li>
               <Link to="" onClick={() => dispatch(signUserOut())}>
+                <i className="fas fa-sign-out-alt" />
                 Logout
               </Link>
             </li>
