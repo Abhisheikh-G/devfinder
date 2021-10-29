@@ -1,8 +1,26 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store/store";
 
+interface Profile {
+  user: string;
+  company: string;
+  website: string;
+  location: string;
+  bio: string;
+  status: string;
+  githubusername: string;
+  skills: string;
+  social?: {
+    youtube: string;
+    facebook: string;
+    twitter: string;
+    instagram: string;
+    linkedin: string;
+  };
+}
+
 interface ProfileState {
-  currentProfile?: Object | null;
+  currentProfile?: Profile | null;
   profiles?: Array<Object>;
   repos?: Array<Object>;
 }
@@ -18,7 +36,7 @@ export const profileSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    setCurrentProfile: (state, action: PayloadAction<Object>) => {
+    setCurrentProfile: (state, action: PayloadAction<Profile>) => {
       state.currentProfile = action.payload;
     },
     removeCurrentProfile: (state) => {

@@ -4,7 +4,7 @@ interface GetUserProps {
   dispatch: Dispatch<any>;
   setAlert: Function;
   history: any;
-  setCurrentProfile: Function;
+  setCurrentProfile?: Function;
   redirect?: boolean;
 }
 export async function getCurrentProfile({
@@ -40,7 +40,74 @@ export async function getCurrentProfile({
 
     if (res.status === 200) {
       console.log(data);
-      dispatch(setCurrentProfile(data));
+      dispatch(setCurrentProfile!(data));
+    }
+  } else {
+    dispatch(
+      setAlert({
+        alertType: "danger",
+        msg: "Unauthorized access. You must be signed in to do that.",
+      })
+    );
+    localStorage.removeItem("token");
+    history.push("/login");
+  }
+}
+
+interface CreateProfileProps extends GetUserProps {
+  formData: {
+    company: string;
+    website: string;
+    location: string;
+    status: string;
+    skills: string;
+    githubusername: string;
+    bio: string;
+    twitter: string;
+    facebook: string;
+    linkedin: string;
+    youtube: string;
+    instagram: string;
+  };
+  isEdit?: boolean;
+}
+
+export async function createProfile({
+  dispatch,
+  setAlert,
+  formData,
+  isEdit = false,
+  history,
+}: CreateProfileProps) {
+  if (localStorage.getItem("token")) {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/profile`, {
+      method: "POST",
+      headers: {
+        "x-auth-token": localStorage.getItem("token")!,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...formData,
+      }),
+    });
+    const data = await res.json();
+
+    const { errors } = data;
+    if (res.status > 300) {
+      if (errors)
+        errors.forEach((error: { msg: string }) => {
+          const { msg } = error;
+          dispatch(setAlert({ msg: msg, alertType: "danger" }));
+        });
+    }
+
+    if (res.status === 200) {
+      dispatch(
+        setAlert({
+          msg: isEdit ? "Profile Updated" : "Profile Created.",
+          alertType: "success",
+        })
+      );
     }
   } else {
     dispatch(

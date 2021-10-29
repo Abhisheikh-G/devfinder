@@ -5,6 +5,7 @@ import Navbar from "./components/layout/Navbar";
 import LandingPage from "./components/layout/LandingPage";
 import Register from "./components/auth/Register";
 import CreateProfile from "./components/profile-form/CreateProfile";
+import EditProfile from "./components/profile-form/EditProfile";
 import Login from "./components/auth/Login";
 import Alert from "./components/layout/Alert";
 import Dashboard from "./components/dashboard/Dashboard";
@@ -35,6 +36,7 @@ const App = () => {
             <Route exact path="/login" component={Login} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/create-profile" component={CreateProfile} />
+            <Route exact path="/edit-profile" component={EditProfile} />
           </Switch>
         </section>
       </Fragment>

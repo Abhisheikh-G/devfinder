@@ -10,24 +10,24 @@ import { getCurrentProfile } from "src/actions/profile";
 import { setAlert } from "src/slices/alertSlice";
 import withAuth from "src/hooks/withAuth";
 // import { createProfile } from "src/actions/profile";
-const CreateProfile = () => {
+const EditProfile = () => {
   const profile = useSelector(selectCurrentProfile);
   const dispatch = useDispatch();
   const history = useHistory();
   const [displaySocialInputs, setDisplaySocialInputs] = useState(false);
   const [formData, setFormData] = useState({
-    company: "",
-    website: "",
-    location: "",
-    status: "",
-    skills: "",
-    githubusername: "",
-    bio: "",
-    twitter: "",
-    facebook: "",
-    linkedin: "",
-    youtube: "",
-    instagram: "",
+    company: profile!.company,
+    website: profile!.website,
+    location: profile!.location,
+    status: profile!.status,
+    skills: profile!.skills.toString(),
+    githubusername: profile!.githubusername,
+    bio: profile!.bio,
+    twitter: profile!.social!.twitter,
+    facebook: profile!.social!.facebook,
+    linkedin: profile!.social!.linkedin,
+    youtube: profile!.social!.youtube,
+    instagram: profile!.social!.instagram,
   });
   const {
     company,
@@ -55,17 +55,18 @@ const CreateProfile = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createProfile({ dispatch, setAlert, formData, history });
+    let isEdit = true;
+    createProfile({ dispatch, setAlert, formData, history, isEdit });
   };
 
   useEffect(() => {
     getCurrentProfile({ dispatch, setAlert, history, setCurrentProfile });
-    if (profile) history.push("/dashboard");
+    if (!profile) history.push("/create-profile");
   }, [profile, history, dispatch]);
 
   return (
     <>
-      <h1 className="large text-primary">Create Your Profile</h1>
+      <h1 className="large text-primary">Edit Your Profile</h1>
       <p className="lead">
         <i className="fas fa-user"></i> Let's get some information to make your
         profile stand out
@@ -234,4 +235,4 @@ const CreateProfile = () => {
   );
 };
 
-export default withAuth(CreateProfile);
+export default withAuth(EditProfile);
