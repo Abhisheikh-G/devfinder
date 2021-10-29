@@ -31,7 +31,7 @@ const LogIn = () => {
   };
 
   useEffect(() => {
-    if (authenticated) history.push("/");
+    if (authenticated) history.push("/dashboard");
   }, [authenticated, history]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {

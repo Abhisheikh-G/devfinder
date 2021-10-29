@@ -31,7 +31,7 @@ const Register = () => {
   );
 
   useEffect(() => {
-    if (authenticated) history.push("/");
+    if (authenticated) history.push("/dashboard");
   }, [authenticated, history]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

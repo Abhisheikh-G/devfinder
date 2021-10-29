@@ -1,6 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { selectIsAuthenticated } from "../../slices/authSlice";
 
 function LandingPage() {
+  const history = useHistory();
+  const authenticated = useSelector(selectIsAuthenticated);
+  useEffect(() => {
+    if (authenticated) history.push("/dashboard");
+  }, [authenticated, history]);
+
   return (
     <section className="landing">
       <div className="dark-overlay">

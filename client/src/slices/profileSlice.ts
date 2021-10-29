@@ -13,22 +13,24 @@ const initialState: ProfileState = {
   profiles: [],
   repos: [],
 };
-export const alertSlice = createSlice({
-  name: "alerts",
+export const profileSlice = createSlice({
+  name: "profile",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
     setCurrentProfile: (state, action: PayloadAction<Object>) => {
       state.currentProfile = action.payload;
     },
-    removeAlert: (state, action: PayloadAction<string>) => {},
+    removeCurrentProfile: (state) => {
+      state.currentProfile = null;
+    },
   },
 });
 
-export const { setCurrentProfile, removeAlert } = alertSlice.actions;
+export const { setCurrentProfile, removeCurrentProfile } = profileSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectCurrentProfile = (state: RootState) =>
   state.profile.currentProfile;
 
-export default alertSlice.reducer;
+export default profileSlice.reducer;
