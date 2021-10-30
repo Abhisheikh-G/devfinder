@@ -1,4 +1,5 @@
 import { Dispatch } from "react";
+import { Profile } from "src/@types/index";
 
 interface GetUserProps {
   dispatch: Dispatch<any>;
@@ -55,20 +56,7 @@ export async function getCurrentProfile({
 }
 
 interface CreateProfileProps extends GetUserProps {
-  formData: {
-    company: string;
-    website: string;
-    location: string;
-    status: string;
-    skills: string;
-    githubusername: string;
-    bio: string;
-    twitter: string;
-    facebook: string;
-    linkedin: string;
-    youtube: string;
-    instagram: string;
-  };
+  formData: Profile;
   isEdit?: boolean;
 }
 

@@ -2,6 +2,7 @@ import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { createProfile } from "src/actions/profile";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import {
   selectCurrentProfile,
   setCurrentProfile,
@@ -226,9 +227,9 @@ const CreateProfile = () => {
         )}
 
         <input type="submit" className="btn btn-primary my-1" />
-        <a className="btn btn-light my-1" href="dashboard.html">
+        <Link className="btn btn-light my-1" to="/dashboard">
           Go Back
-        </a>
+        </Link>
       </form>
     </>
   );
