@@ -2,7 +2,7 @@ import { Fragment, ChangeEvent, useState, FormEvent, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setAlert } from "../../slices/alertSlice";
-import { signUserIn, loadUser } from "../../slices/authSlice";
+import { signUserIn } from "../../slices/authSlice";
 import { getUser } from "src/actions/auth";
 import { useHistory } from "react-router-dom";
 import { RootState } from "src/store/store";
@@ -67,7 +67,7 @@ const LogIn = () => {
         }
         if (res.status === 200) {
           dispatch(signUserIn(token));
-          getUser({ dispatch, setAlert, history, loadUser });
+          getUser({ dispatch, history });
           dispatch(
             setAlert({
               alertType: "success",

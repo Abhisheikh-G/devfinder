@@ -2,6 +2,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useState, FormEvent, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
 import { createEducation } from "src/actions/profile";
+import withAuth from "src/hooks/withAuth";
 
 const AddEducation = () => {
   const history = useHistory();
@@ -124,4 +125,4 @@ const AddEducation = () => {
   );
 };
 
-export default AddEducation;
+export default withAuth(AddEducation);

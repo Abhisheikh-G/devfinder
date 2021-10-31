@@ -9,10 +9,7 @@ import EditProfile from "./components/profile-form/EditProfile";
 import Login from "./components/auth/Login";
 import Alert from "./components/layout/Alert";
 import Dashboard from "./components/dashboard/Dashboard";
-import { loadUser } from "./slices/authSlice";
 import { useHistory } from "react-router-dom";
-import { setAlert } from "./slices/alertSlice";
-// import { setAlert } from "./slices/alertSlice";
 import { useDispatch } from "react-redux";
 import { getUser } from "./actions/auth";
 import AddExperience from "./components/profile-form/AddExperience";
@@ -23,7 +20,7 @@ const App = () => {
   const history = useHistory();
   useEffect(() => {
     let redirect = false;
-    getUser({ dispatch, setAlert, history, loadUser, redirect });
+    getUser({ dispatch, history, redirect });
   }, [dispatch, history]);
 
   return (

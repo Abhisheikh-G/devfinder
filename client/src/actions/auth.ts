@@ -1,17 +1,14 @@
 import { Dispatch } from "react";
-
+import { loadUser } from "src/slices/authSlice";
+import { setAlert } from "src/slices/alertSlice";
 interface GetUserProps {
   dispatch: Dispatch<any>;
-  setAlert: Function;
   history: any;
-  loadUser: Function;
   redirect?: boolean;
 }
 export async function getUser({
   dispatch,
-  setAlert,
   history,
-  loadUser,
   redirect = true,
 }: GetUserProps) {
   if (localStorage.getItem("token")) {

@@ -2,6 +2,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useDispatch } from "react-redux";
 import { createExperience } from "src/actions/profile";
+import withAuth from "src/hooks/withAuth";
 
 const AddExperience = () => {
   const dispatch = useDispatch();
@@ -130,4 +131,4 @@ const AddExperience = () => {
   );
 };
 
-export default AddExperience;
+export default withAuth(AddExperience);
