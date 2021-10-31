@@ -12,5 +12,5 @@ After cloning the repository and creating a .env file with a proper MongoDB conn
 the following command inside the project directory:
 
 ```
-npm i && npm run start
+npm i && cd client && npm i && cd .. && npm run dev
 ```
