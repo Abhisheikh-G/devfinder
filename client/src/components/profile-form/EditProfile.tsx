@@ -13,6 +13,7 @@ import withAuth from "src/hooks/withAuth";
 // import { createProfile } from "src/actions/profile";
 const EditProfile = () => {
   const profile = useSelector(selectCurrentProfile);
+
   const dispatch = useDispatch();
   const history = useHistory();
   const [displaySocialInputs, setDisplaySocialInputs] = useState(false);
@@ -44,6 +45,7 @@ const EditProfile = () => {
     youtube,
     instagram,
   } = formData;
+  // getCurrentProfile({ dispatch, setAlert, history, setCurrentProfile });
 
   const handleFormChange = (
     e:
@@ -61,9 +63,8 @@ const EditProfile = () => {
   };
 
   useEffect(() => {
-    getCurrentProfile({ dispatch, setAlert, history, setCurrentProfile });
     if (!profile) history.push("/create-profile");
-  }, [profile, history, dispatch]);
+  });
 
   return (
     <>

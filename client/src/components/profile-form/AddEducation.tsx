@@ -1,5 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+
 const AddEducation = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   return (
     <>
       <h1 className="large text-primary">Add Your Education</h1>

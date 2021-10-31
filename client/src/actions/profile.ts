@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { Profile, Social } from "src/@types/index";
+import { Experience, Profile, Social } from "src/@types/index";
 
 interface GetUserProps {
   dispatch: Dispatch<any>;
@@ -56,7 +56,7 @@ export async function getCurrentProfile({
 }
 
 interface CreateProfileProps extends GetUserProps {
-  formData: Profile | Social;
+  formData: Profile | Social | Experience;
   isEdit?: boolean;
 }
 
@@ -120,7 +120,7 @@ export async function createExperience({
     const res = await fetch(
       `${process.env.REACT_APP_API_URL}/profile/experience`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           "x-auth-token": localStorage.getItem("token")!,
           "Content-Type": "application/json",
@@ -133,6 +133,8 @@ export async function createExperience({
     const data = await res.json();
 
     const { errors } = data;
+
+    console.log(data);
     if (res.status > 300) {
       if (errors)
         errors.forEach((error: { msg: string }) => {
@@ -142,13 +144,13 @@ export async function createExperience({
     }
 
     if (res.status === 200 && typeof data !== "undefined") {
-      dispatch([
-        setCurrentProfile!(data),
+      dispatch(
         setAlert({
           msg: "Experience added.",
           alertType: "success",
-        }),
-      ]);
+        })
+      );
+      dispatch(setCurrentProfile!(data));
     }
   } else {
     dispatch(
@@ -195,13 +197,14 @@ export async function createEducation({
     }
 
     if (res.status === 200 && typeof data !== "undefined") {
-      dispatch([
-        setCurrentProfile!(data),
+      dispatch(
         setAlert({
           msg: "Education added.",
           alertType: "success",
-        }),
-      ]);
+        })
+      );
+
+      dispatch(setCurrentProfile!(data));
     }
   } else {
     dispatch(

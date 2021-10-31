@@ -17,3 +17,13 @@ export interface Social {
   instagram: string;
   linkedin: string;
 }
+
+export interface Experience {
+  title: string;
+  company: string;
+  location: string;
+  from: string;
+  to: string;
+  current: boolean;
+  description: string;
+}
