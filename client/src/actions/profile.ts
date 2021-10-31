@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { Experience, Profile, Social } from "src/@types/index";
+import { Education, Experience, Profile, Social } from "src/@types/index";
 
 interface GetUserProps {
   dispatch: Dispatch<any>;
@@ -56,7 +56,7 @@ export async function getCurrentProfile({
 }
 
 interface CreateProfileProps extends GetUserProps {
-  formData: Profile | Social | Experience;
+  formData: Profile | Social | Experience | Education;
   isEdit?: boolean;
 }
 
@@ -175,7 +175,7 @@ export async function createEducation({
     const res = await fetch(
       `${process.env.REACT_APP_API_URL}/profile/education`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           "x-auth-token": localStorage.getItem("token")!,
           "Content-Type": "application/json",

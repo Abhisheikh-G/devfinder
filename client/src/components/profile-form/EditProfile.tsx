@@ -3,11 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createProfile } from "src/actions/profile";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import {
-  selectCurrentProfile,
-  setCurrentProfile,
-} from "src/slices/profileSlice";
-import { getCurrentProfile } from "src/actions/profile";
+import { selectCurrentProfile } from "src/slices/profileSlice";
 import { setAlert } from "src/slices/alertSlice";
 import withAuth from "src/hooks/withAuth";
 // import { createProfile } from "src/actions/profile";
