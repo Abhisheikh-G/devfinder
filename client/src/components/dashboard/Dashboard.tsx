@@ -3,7 +3,7 @@ import withAuth from "src/hooks/withAuth";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { getCurrentProfile } from "src/actions/profile";
+import { deleteProfile, getCurrentProfile } from "src/actions/profile";
 import { setAlert } from "src/slices/alertSlice";
 import {
   setCurrentProfile,
@@ -21,6 +21,14 @@ const Dashboard = () => {
   useEffect(() => {
     getCurrentProfile({ dispatch, setAlert, history, setCurrentProfile });
   }, [dispatch, history]);
+  const handleDeleteAccount = () => {
+    if (
+      window.confirm(
+        "Are you sure you want to delete your account? This action cannot be undone."
+      )
+    )
+      deleteProfile({ dispatch, setAlert, setCurrentProfile, history });
+  };
   return user ? (
     <>
       <h1 className="large text-primary">Dashboard</h1>
@@ -75,7 +83,7 @@ const Dashboard = () => {
             </tbody>
           </table>
           <div className="my-2">
-            <button className="btn btn-danger">
+            <button className="btn btn-danger" onClick={handleDeleteAccount}>
               <i className="fas fa-user-minus"></i>
               Delete My Account
             </button>

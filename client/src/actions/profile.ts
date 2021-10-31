@@ -1,5 +1,6 @@
 import { Dispatch } from "react";
 import { Education, Experience, Profile, Social } from "src/@types/index";
+import { signUserOut } from "src/slices/authSlice";
 
 interface GetUserProps {
   dispatch: Dispatch<any>;
@@ -310,6 +311,55 @@ export async function deleteExperience({
       );
 
       dispatch(setCurrentProfile!(data));
+    }
+  } else {
+    dispatch(
+      setAlert({
+        alertType: "danger",
+        msg: "Unauthorized access. You must be signed in to do that.",
+      })
+    );
+    localStorage.removeItem("token");
+    history.push("/login");
+  }
+}
+
+export async function deleteProfile({
+  dispatch,
+  setAlert,
+
+  history,
+}: DeleteProfileProps) {
+  if (localStorage.getItem("token")) {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/profile/`, {
+      method: "DELETE",
+      headers: {
+        "x-auth-token": localStorage.getItem("token")!,
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+
+    const { errors } = data;
+    if (res.status > 300) {
+      if (errors)
+        errors.forEach((error: { msg: string }) => {
+          const { msg } = error;
+          dispatch(setAlert({ msg: msg, alertType: "danger" }));
+        });
+    }
+
+    if (res.status === 200 && typeof data !== "undefined") {
+      dispatch(
+        setAlert({
+          msg: "Experience deleted.",
+          alertType: "success",
+        })
+      );
+
+      localStorage.removeItem("token");
+      dispatch(signUserOut());
+      history.push("/");
     }
   } else {
     dispatch(
