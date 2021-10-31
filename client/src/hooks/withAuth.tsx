@@ -10,7 +10,6 @@ function withAuth(Component: ComponentType<any>) {
     useEffect(() => {
       getUser({ dispatch, history });
     }, [dispatch, history]);
-
     return <Component {...hocProps} />;
   };
 }

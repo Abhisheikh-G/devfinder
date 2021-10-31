@@ -2,13 +2,17 @@ import { Dispatch } from "react";
 import { Education, Experience, Profile, Social } from "src/@types/index";
 import { signUserOut } from "src/slices/authSlice";
 import { setAlert } from "src/slices/alertSlice";
-import { setCurrentProfile } from "src/slices/profileSlice";
+import {
+  setCurrentProfile,
+  setProfiles,
+  setRepos,
+} from "src/slices/profileSlice";
 
 interface GetUserProps {
   dispatch: Dispatch<any>;
-
   history: any;
-
+  _id?: string;
+  username?: string;
   redirect?: boolean;
 }
 export async function getCurrentProfile({
@@ -41,6 +45,112 @@ export async function getCurrentProfile({
 
     if (res.status === 200) {
       dispatch(setCurrentProfile!(data));
+    }
+  } else {
+    dispatch(
+      setAlert({
+        alertType: "danger",
+        msg: "Unauthorized access. You must be signed in to do that.",
+      })
+    );
+    localStorage.removeItem("token");
+    history.push("/login");
+  }
+}
+
+export async function getProfiles({
+  dispatch,
+  history,
+  redirect = true,
+}: GetUserProps) {
+  if (localStorage.getItem("token")) {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/profile/me`, {
+      method: "GET",
+      headers: {
+        "x-auth-token": localStorage.getItem("token")!,
+      },
+    });
+    const data = await res.json();
+    if (res.status > 400) {
+      dispatch(setAlert({ alertType: "danger", msg: data.msg }));
+      localStorage.removeItem("token");
+      redirect && history.push("/login");
+    }
+
+    if (res.status === 200) {
+      dispatch(setProfiles(data));
+    }
+  } else {
+    dispatch(
+      setAlert({
+        alertType: "danger",
+        msg: "Unauthorized access. You must be signed in to do that.",
+      })
+    );
+    localStorage.removeItem("token");
+    history.push("/login");
+  }
+}
+
+export async function getProfileByID({
+  dispatch,
+  history,
+  _id,
+  redirect = true,
+}: GetUserProps) {
+  if (localStorage.getItem("token")) {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/profile/${_id}`, {
+      method: "GET",
+      headers: {
+        "x-auth-token": localStorage.getItem("token")!,
+      },
+    });
+    const data = await res.json();
+    if (res.status > 400) {
+      dispatch(setAlert({ alertType: "danger", msg: data.msg }));
+      localStorage.removeItem("token");
+      redirect && history.push("/login");
+    }
+    if (res.status === 200) {
+      dispatch(setCurrentProfile(data));
+    }
+  } else {
+    dispatch(
+      setAlert({
+        alertType: "danger",
+        msg: "Unauthorized access. You must be signed in to do that.",
+      })
+    );
+    localStorage.removeItem("token");
+    history.push("/login");
+  }
+}
+
+export async function getGithubRepos({
+  dispatch,
+  history,
+  username,
+  redirect = true,
+}: GetUserProps) {
+  if (localStorage.getItem("token")) {
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URL}/profile/github/${username}`,
+      {
+        method: "GET",
+        headers: {
+          "x-auth-token": localStorage.getItem("token")!,
+        },
+      }
+    );
+    const data = await res.json();
+    if (res.status > 400) {
+      dispatch(setAlert({ alertType: "danger", msg: data.msg }));
+      localStorage.removeItem("token");
+      redirect && history.push("/login");
+    }
+
+    if (res.status === 200) {
+      dispatch(setRepos(data));
     }
   } else {
     dispatch(

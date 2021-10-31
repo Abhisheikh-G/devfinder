@@ -4,7 +4,7 @@ import { Profile } from "src/@types/index";
 
 interface ProfileState {
   currentProfile?: Profile | null;
-  profiles?: Array<Object>;
+  profiles?: Array<Profile>;
   repos?: Array<Object>;
 }
 
@@ -22,13 +22,24 @@ export const profileSlice = createSlice({
     setCurrentProfile: (state, action: PayloadAction<Profile>) => {
       state.currentProfile = action.payload;
     },
+    setProfiles: (state, action: PayloadAction<Profile[]>) => {
+      state.profiles = action.payload;
+    },
+    setRepos: (state, action: PayloadAction<any[]>) => {
+      state.repos = action.payload;
+    },
     removeCurrentProfile: (state) => {
       state.currentProfile = null;
     },
   },
 });
 
-export const { setCurrentProfile, removeCurrentProfile } = profileSlice.actions;
+export const {
+  setCurrentProfile,
+  removeCurrentProfile,
+  setProfiles,
+  setRepos,
+} = profileSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectCurrentProfile = (state: RootState) =>

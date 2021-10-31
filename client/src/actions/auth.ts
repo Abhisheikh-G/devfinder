@@ -18,7 +18,6 @@ export async function getUser({
       },
     });
     const data = await res.json();
-
     if (res.status > 300) {
       dispatch(setAlert({ alertType: "danger", msg: data.msg }));
       localStorage.removeItem("token");
