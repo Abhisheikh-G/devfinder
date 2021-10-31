@@ -10,6 +10,8 @@ import {
   selectCurrentProfile,
 } from "src/slices/profileSlice";
 import { selectUser } from "src/slices/authSlice";
+import DisplayExperience from "./Experience";
+import DisplayEducation from "./Education";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -51,22 +53,9 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Tech Guy Web Solutions</td>
-                <td className="hide-sm">Senior Developer</td>
-                <td className="hide-sm">02-03-2009 - 01-02-2014</td>
-                <td>
-                  <button className="btn btn-danger">Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Traversy Media</td>
-                <td className="hide-sm">Instructor & Developer</td>
-                <td className="hide-sm">02-03-2015 - Now</td>
-                <td>
-                  <button className="btn btn-danger">Delete</button>
-                </td>
-              </tr>
+              {profile.experience?.map((exp) => (
+                <DisplayExperience experience={exp} key={exp._id} />
+              ))}
             </tbody>
           </table>
           <h2 className="my-2">Education Credentials</h2>
@@ -80,14 +69,9 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Northern Essex</td>
-                <td className="hide-sm">Associates</td>
-                <td className="hide-sm">02-03-2007 - 01-02-2009</td>
-                <td>
-                  <button className="btn btn-danger">Delete</button>
-                </td>
-              </tr>
+              {profile.education?.map((edu) => (
+                <DisplayEducation education={edu} key={edu._id} />
+              ))}
             </tbody>
           </table>
           <div className="my-2">

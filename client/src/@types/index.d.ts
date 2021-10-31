@@ -8,6 +8,8 @@ export interface Profile {
   githubusername: string;
   skills: string;
   social?: Social;
+  education?: any[];
+  experience?: any[];
 }
 
 export interface Social {
@@ -26,6 +28,7 @@ export interface Experience {
   to: string;
   current: boolean;
   description: string;
+  _id?: string;
 }
 
 export interface Education {
@@ -36,4 +39,5 @@ export interface Education {
   to: string;
   current: boolean;
   description: string;
+  _id?: string;
 }

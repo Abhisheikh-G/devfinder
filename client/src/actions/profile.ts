@@ -23,7 +23,6 @@ export async function getCurrentProfile({
       },
     });
     const data = await res.json();
-    console.log(data);
     if (res.status > 400) {
       dispatch(setAlert({ alertType: "danger", msg: data.msg }));
       localStorage.removeItem("token");
@@ -40,7 +39,6 @@ export async function getCurrentProfile({
     }
 
     if (res.status === 200) {
-      console.log(data);
       dispatch(setCurrentProfile!(data));
     }
   } else {
@@ -58,6 +56,7 @@ export async function getCurrentProfile({
 interface CreateProfileProps extends GetUserProps {
   formData: Profile | Social | Experience | Education;
   isEdit?: boolean;
+  _id?: string;
 }
 
 export async function createProfile({
@@ -200,6 +199,112 @@ export async function createEducation({
       dispatch(
         setAlert({
           msg: "Education added.",
+          alertType: "success",
+        })
+      );
+
+      dispatch(setCurrentProfile!(data));
+    }
+  } else {
+    dispatch(
+      setAlert({
+        alertType: "danger",
+        msg: "Unauthorized access. You must be signed in to do that.",
+      })
+    );
+    localStorage.removeItem("token");
+    history.push("/login");
+  }
+}
+
+interface DeleteProfileProps extends GetUserProps {
+  _id?: string;
+}
+
+export async function deleteEducation({
+  dispatch,
+  setAlert,
+  setCurrentProfile,
+  _id,
+  history,
+}: DeleteProfileProps) {
+  if (localStorage.getItem("token")) {
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URL}/profile/education/${_id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "x-auth-token": localStorage.getItem("token")!,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await res.json();
+
+    const { errors } = data;
+    if (res.status > 300) {
+      if (errors)
+        errors.forEach((error: { msg: string }) => {
+          const { msg } = error;
+          dispatch(setAlert({ msg: msg, alertType: "danger" }));
+        });
+    }
+
+    if (res.status === 200 && typeof data !== "undefined") {
+      dispatch(
+        setAlert({
+          msg: "Education deleted.",
+          alertType: "success",
+        })
+      );
+
+      dispatch(setCurrentProfile!(data));
+    }
+  } else {
+    dispatch(
+      setAlert({
+        alertType: "danger",
+        msg: "Unauthorized access. You must be signed in to do that.",
+      })
+    );
+    localStorage.removeItem("token");
+    history.push("/login");
+  }
+}
+
+export async function deleteExperience({
+  dispatch,
+  setAlert,
+  setCurrentProfile,
+  _id,
+  history,
+}: DeleteProfileProps) {
+  if (localStorage.getItem("token")) {
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URL}/profile/experience/${_id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "x-auth-token": localStorage.getItem("token")!,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await res.json();
+
+    const { errors } = data;
+    if (res.status > 300) {
+      if (errors)
+        errors.forEach((error: { msg: string }) => {
+          const { msg } = error;
+          dispatch(setAlert({ msg: msg, alertType: "danger" }));
+        });
+    }
+
+    if (res.status === 200 && typeof data !== "undefined") {
+      dispatch(
+        setAlert({
+          msg: "Experience deleted.",
           alertType: "success",
         })
       );
