@@ -1,6 +1,6 @@
 ### Dev Finder
 
-To run this project on your machine, please clone the repository and create a .env file in the project directory.
+To run this project on your machine, please clone the repository and create a .env file in the project root directory.
 An example .env file:
 
 ```
