@@ -4,11 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { deleteProfile, getCurrentProfile } from "src/actions/profile";
-import { setAlert } from "src/slices/alertSlice";
-import {
-  setCurrentProfile,
-  selectCurrentProfile,
-} from "src/slices/profileSlice";
+import { selectCurrentProfile } from "src/slices/profileSlice";
 import { selectUser } from "src/slices/authSlice";
 import DisplayExperience from "./Experience";
 import DisplayEducation from "./Education";
@@ -19,7 +15,7 @@ const Dashboard = () => {
   const user = useSelector(selectUser);
   const profile = useSelector(selectCurrentProfile);
   useEffect(() => {
-    getCurrentProfile({ dispatch, setAlert, history, setCurrentProfile });
+    getCurrentProfile({ dispatch, history });
   }, [dispatch, history]);
   const handleDeleteAccount = () => {
     if (
@@ -27,7 +23,7 @@ const Dashboard = () => {
         "Are you sure you want to delete your account? This action cannot be undone."
       )
     )
-      deleteProfile({ dispatch, setAlert, setCurrentProfile, history });
+      deleteProfile({ dispatch, history });
   };
   return user ? (
     <>

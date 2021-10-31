@@ -1,9 +1,7 @@
 import { Link, useHistory } from "react-router-dom";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useDispatch } from "react-redux";
-import { setAlert } from "src/slices/alertSlice";
 import { createExperience } from "src/actions/profile";
-import { setCurrentProfile } from "src/slices/profileSlice";
 
 const AddExperience = () => {
   const dispatch = useDispatch();
@@ -35,8 +33,6 @@ const AddExperience = () => {
     e.preventDefault();
     createExperience({
       dispatch,
-      setAlert,
-      setCurrentProfile,
       formData,
       history,
     });

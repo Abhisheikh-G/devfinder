@@ -3,8 +3,6 @@ import { Experience } from "src/@types";
 import Moment from "react-moment";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { setAlert } from "src/slices/alertSlice";
-import { setCurrentProfile } from "src/slices/profileSlice";
 import { deleteExperience } from "src/actions/profile";
 
 function DisplayExperience({ experience }: { experience: Experience }) {
@@ -15,8 +13,6 @@ function DisplayExperience({ experience }: { experience: Experience }) {
     if (window.confirm(`Are you sure you want to delete ${experience.company}`))
       deleteExperience({
         dispatch,
-        setAlert,
-        setCurrentProfile,
         _id: experience._id,
         history,
       });

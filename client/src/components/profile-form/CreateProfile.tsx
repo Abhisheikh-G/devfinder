@@ -3,12 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { createProfile } from "src/actions/profile";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import {
-  selectCurrentProfile,
-  setCurrentProfile,
-} from "src/slices/profileSlice";
+import { selectCurrentProfile } from "src/slices/profileSlice";
 import { getCurrentProfile } from "src/actions/profile";
-import { setAlert } from "src/slices/alertSlice";
+
 import withAuth from "src/hooks/withAuth";
 // import { createProfile } from "src/actions/profile";
 const CreateProfile = () => {
@@ -56,11 +53,11 @@ const CreateProfile = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createProfile({ dispatch, setAlert, formData, history });
+    createProfile({ dispatch, formData, history });
   };
 
   useEffect(() => {
-    getCurrentProfile({ dispatch, setAlert, history, setCurrentProfile });
+    getCurrentProfile({ dispatch, history });
     if (profile) history.push("/dashboard");
   }, [profile, history, dispatch]);
 

@@ -1,19 +1,19 @@
 import { Dispatch } from "react";
 import { Education, Experience, Profile, Social } from "src/@types/index";
 import { signUserOut } from "src/slices/authSlice";
+import { setAlert } from "src/slices/alertSlice";
+import { setCurrentProfile } from "src/slices/profileSlice";
 
 interface GetUserProps {
   dispatch: Dispatch<any>;
-  setAlert: Function;
+
   history: any;
-  setCurrentProfile?: Function;
+
   redirect?: boolean;
 }
 export async function getCurrentProfile({
   dispatch,
-  setAlert,
   history,
-  setCurrentProfile,
   redirect = true,
 }: GetUserProps) {
   if (localStorage.getItem("token")) {
@@ -62,7 +62,6 @@ interface CreateProfileProps extends GetUserProps {
 
 export async function createProfile({
   dispatch,
-  setAlert,
   formData,
   isEdit = false,
   history,
@@ -111,8 +110,6 @@ export async function createProfile({
 
 export async function createExperience({
   dispatch,
-  setAlert,
-  setCurrentProfile,
   formData,
   history,
 }: CreateProfileProps) {
@@ -166,8 +163,6 @@ export async function createExperience({
 
 export async function createEducation({
   dispatch,
-  setAlert,
-  setCurrentProfile,
   formData,
   history,
 }: CreateProfileProps) {
@@ -224,8 +219,6 @@ interface DeleteProfileProps extends GetUserProps {
 
 export async function deleteEducation({
   dispatch,
-  setAlert,
-  setCurrentProfile,
   _id,
   history,
 }: DeleteProfileProps) {
@@ -275,8 +268,6 @@ export async function deleteEducation({
 
 export async function deleteExperience({
   dispatch,
-  setAlert,
-  setCurrentProfile,
   _id,
   history,
 }: DeleteProfileProps) {
@@ -324,12 +315,7 @@ export async function deleteExperience({
   }
 }
 
-export async function deleteProfile({
-  dispatch,
-  setAlert,
-
-  history,
-}: DeleteProfileProps) {
+export async function deleteProfile({ dispatch, history }: DeleteProfileProps) {
   if (localStorage.getItem("token")) {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/profile/`, {
       method: "DELETE",
@@ -357,9 +343,8 @@ export async function deleteProfile({
         })
       );
 
-      localStorage.removeItem("token");
       dispatch(signUserOut());
-      history.push("/");
+      history.push("/register");
     }
   } else {
     dispatch(

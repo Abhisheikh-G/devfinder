@@ -4,8 +4,6 @@ import Moment from "react-moment";
 import { deleteEducation } from "src/actions/profile";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { setAlert } from "src/slices/alertSlice";
-import { setCurrentProfile } from "src/slices/profileSlice";
 
 const DisplayEducation = ({ education }: { education: Education }) => {
   const dispatch = useDispatch();
@@ -15,8 +13,6 @@ const DisplayEducation = ({ education }: { education: Education }) => {
     if (window.confirm(`Are you sure you want to delete ${education.school}`))
       deleteEducation({
         dispatch,
-        setAlert,
-        setCurrentProfile,
         _id: education._id,
         history,
       });

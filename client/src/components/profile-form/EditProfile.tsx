@@ -4,7 +4,6 @@ import { createProfile } from "src/actions/profile";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { selectCurrentProfile } from "src/slices/profileSlice";
-import { setAlert } from "src/slices/alertSlice";
 import withAuth from "src/hooks/withAuth";
 // import { createProfile } from "src/actions/profile";
 const EditProfile = () => {
@@ -55,7 +54,7 @@ const EditProfile = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let isEdit = true;
-    createProfile({ dispatch, setAlert, formData, history, isEdit });
+    createProfile({ dispatch, formData, history, isEdit });
   };
 
   useEffect(() => {
