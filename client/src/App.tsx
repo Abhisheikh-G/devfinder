@@ -15,6 +15,8 @@ import { setAlert } from "./slices/alertSlice";
 // import { setAlert } from "./slices/alertSlice";
 import { useDispatch } from "react-redux";
 import { getUser } from "./actions/auth";
+import AddExperience from "./components/profile-form/AddExperience";
+import AddEducation from "./components/profile-form/AddEducation";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -37,6 +39,8 @@ const App = () => {
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/create-profile" component={CreateProfile} />
             <Route exact path="/edit-profile" component={EditProfile} />
+            <Route exact path="/add-experience" component={AddExperience} />
+            <Route exact path="/add-education" component={AddEducation} />
           </Switch>
         </section>
       </Fragment>

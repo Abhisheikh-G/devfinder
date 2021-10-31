@@ -1,5 +1,5 @@
 export interface Profile {
-  user: string;
+  user?: string;
   company: string;
   website: string;
   location: string;
@@ -7,11 +7,13 @@ export interface Profile {
   status: string;
   githubusername: string;
   skills: string;
-  social?: {
-    youtube: string;
-    facebook: string;
-    twitter: string;
-    instagram: string;
-    linkedin: string;
-  };
+  social?: Social;
+}
+
+export interface Social {
+  youtube: string;
+  facebook: string;
+  twitter: string;
+  instagram: string;
+  linkedin: string;
 }
