@@ -45,4 +45,6 @@ export const {
 export const selectCurrentProfile = (state: RootState) =>
   state.profile.currentProfile;
 
+export const selectProfiles = (state: RootState) => state.profile.profiles;
+
 export default profileSlice.reducer;

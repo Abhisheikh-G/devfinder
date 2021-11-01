@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { setAlert } from "../../slices/alertSlice";
 import { registerUser } from "../../slices/authSlice";
-import withAuth from "../../hooks/withAuth";
 import { RootState } from "src/store/store";
 import { useHistory } from "react-router-dom";
 
@@ -147,4 +146,4 @@ const Register = () => {
   );
 };
 
-export default withAuth(Register);
+export default Register;

@@ -1,12 +1,12 @@
 export interface Profile {
-  user?: string;
+  user?: any;
   company: string;
   website: string;
   location: string;
   bio: string;
   status: string;
   githubusername: string;
-  skills: string;
+  skills: [];
   social?: Social;
   education?: any[];
   experience?: any[];

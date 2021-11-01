@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { getUser } from "./actions/auth";
 import AddExperience from "./components/profile-form/AddExperience";
 import AddEducation from "./components/profile-form/AddEducation";
+import Profiles from "./components/profiles/Profiles";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ const App = () => {
             <Route exact path="/edit-profile" component={EditProfile} />
             <Route exact path="/add-experience" component={AddExperience} />
             <Route exact path="/add-education" component={AddEducation} />
+            <Route exact path="/profiles" component={Profiles} />
           </Switch>
         </section>
       </Fragment>
