@@ -5,7 +5,7 @@ const ProfileEducation = ({ profile }: { profile: Profile }) => {
     <div className="profile-edu bg-white p-2">
       <h2 className="text-primary">Education</h2>
       {profile.education?.map((edu: Education, idx: number) => (
-        <div>
+        <div key={idx}>
           <h3>{edu.school}</h3>
           <p>
             <Moment format="MM/DD/YYYY">{edu.from}</Moment> -{" "}

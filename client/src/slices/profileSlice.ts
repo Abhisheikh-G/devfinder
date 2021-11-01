@@ -5,7 +5,7 @@ import { Profile } from "src/@types/index";
 interface ProfileState {
   currentProfile?: Profile | null;
   profiles?: Array<Profile>;
-  repos?: Array<Object>;
+  repos?: Array<any>;
 }
 
 // Define the initial state using that type
@@ -44,6 +44,8 @@ export const {
 // Other code such as selectors can use the imported `RootState` type
 export const selectCurrentProfile = (state: RootState) =>
   state.profile.currentProfile;
+
+export const selectRepos = (state: RootState) => state.profile.repos;
 
 export const selectProfiles = (state: RootState) => state.profile.profiles;
 

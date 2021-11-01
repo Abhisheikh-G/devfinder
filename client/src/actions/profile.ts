@@ -10,7 +10,7 @@ import {
 
 interface GetUserProps {
   dispatch: Dispatch<any>;
-  history: any;
+  history?: any;
   _id?: string;
   username?: string;
   redirect?: boolean;
@@ -99,41 +99,20 @@ export async function getProfileByID({
   }
 }
 
-export async function getGithubRepos({
-  dispatch,
-  history,
-  username,
-  redirect = true,
-}: GetUserProps) {
-  if (localStorage.getItem("token")) {
-    const res = await fetch(
-      `${process.env.REACT_APP_API_URL}/profile/github/${username}`,
-      {
-        method: "GET",
-        headers: {
-          "x-auth-token": localStorage.getItem("token")!,
-        },
-      }
-    );
-    const data = await res.json();
-    if (res.status > 400) {
-      dispatch(setAlert({ alertType: "danger", msg: data.msg }));
-      localStorage.removeItem("token");
-      redirect && history.push("/login");
+export async function getGithubRepos({ dispatch, username }: GetUserProps) {
+  const res = await fetch(
+    `${process.env.REACT_APP_API_URL}/profile/github/${username}`,
+    {
+      method: "GET",
     }
+  );
+  const data = await res.json();
+  if (res.status > 400) {
+    dispatch(setAlert({ alertType: "danger", msg: data.msg }));
+  }
 
-    if (res.status === 200) {
-      dispatch(setRepos(data));
-    }
-  } else {
-    dispatch(
-      setAlert({
-        alertType: "danger",
-        msg: "Unauthorized access. You must be signed in to do that.",
-      })
-    );
-    localStorage.removeItem("token");
-    history.push("/login");
+  if (res.status === 200) {
+    dispatch(setRepos(data));
   }
 }
 
