@@ -13,7 +13,8 @@ const Posts = () => {
   console.log(posts);
   useEffect(() => {
     getPosts(dispatch, history);
-  }, [dispatch, history]);
+  }, [posts, dispatch, history]);
+
   return (
     <>
       <h1 className="large text-primary">Posts</h1>
@@ -37,7 +38,15 @@ const Posts = () => {
         </form>
       </div>
       <div className="posts">
-        {posts && posts.map((post, idx) => <PostItem key={idx} post={post} />)}
+        {posts &&
+          posts.map((post, idx) => (
+            <PostItem
+              key={idx}
+              post={post}
+              history={history}
+              dispatch={dispatch}
+            />
+          ))}
       </div>
     </>
   );

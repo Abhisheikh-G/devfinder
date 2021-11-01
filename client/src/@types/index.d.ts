@@ -49,6 +49,6 @@ export interface Post {
   name: string;
   avatar: string;
   date: string;
-  likes: [];
-  comments: [];
+  likes: string[];
+  comments: string[];
 }

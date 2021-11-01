@@ -3,7 +3,17 @@ import { Post } from "src/@types";
 import { Link } from "react-router-dom";
 import { selectUser } from "src/slices/authSlice";
 import { useSelector } from "react-redux";
-const PostItem = ({ post }: { post: Post }) => {
+import { addLike, removeLike } from "src/actions/post";
+import { Dispatch } from "redux";
+const PostItem = ({
+  post,
+  dispatch,
+  history,
+}: {
+  post: Post;
+  dispatch: Dispatch;
+  history: any;
+}) => {
   const authUser = useSelector(selectUser);
   return (
     <div className="post bg-white p-1 my-1">
@@ -22,11 +32,19 @@ const PostItem = ({ post }: { post: Post }) => {
         <p className="post-date">
           Posted on <Moment format="MM/DD/YYYY">{post.date}</Moment>
         </p>
-        <button type="button" className="btn btn-light">
+        <button
+          type="button"
+          className="btn btn-light"
+          onClick={() => addLike(dispatch, history, post._id!)}
+        >
           <i className="fas fa-thumbs-up"></i>
           <span>{post.likes.length}</span>
         </button>
-        <button type="button" className="btn btn-light">
+        <button
+          type="button"
+          className="btn btn-light"
+          onClick={() => removeLike(dispatch, history, post._id!)}
+        >
           <i className="fas fa-thumbs-down"></i>
         </button>
         <Link to={`/post/${post._id}`} className="btn btn-primary">
