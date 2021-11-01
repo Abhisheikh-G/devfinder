@@ -3,7 +3,7 @@ import { Post } from "src/@types";
 import { Link } from "react-router-dom";
 import { selectUser } from "src/slices/authSlice";
 import { useSelector } from "react-redux";
-import { addLike, removeLike } from "src/actions/post";
+import { addLike, removeLike, deletePost } from "src/actions/post";
 import { Dispatch } from "redux";
 const PostItem = ({
   post,
@@ -15,6 +15,7 @@ const PostItem = ({
   history: any;
 }) => {
   const authUser = useSelector(selectUser);
+
   return (
     <div className="post bg-white p-1 my-1">
       <div>
@@ -52,7 +53,13 @@ const PostItem = ({
           <span className="comment-count">{post.comments.length}</span>
         </Link>
         {authUser?._id.toString() === post.user?.toString() && (
-          <button type="button" className="btn btn-danger">
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={() => {
+              deletePost(dispatch, history, post._id!);
+            }}
+          >
             <i className="fas fa-times"></i>
           </button>
         )}

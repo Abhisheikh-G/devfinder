@@ -112,7 +112,6 @@ export const removeLike = async (
         }
       );
       const data = await res.json();
-      console.log(data);
       if (res.status > 300) {
         dispatch(
           setAlert({
@@ -128,6 +127,62 @@ export const removeLike = async (
           })
         );
         dispatch(updateLikes(data));
+      }
+    } catch (error: any) {
+      console.log(error);
+      dispatch(
+        setAlert({
+          msg: "Unable to get posts at this time.",
+          alertType: "danger",
+        })
+      );
+    }
+  } else {
+    dispatch(
+      setAlert({
+        msg: "You are unauthorized to do that..",
+        alertType: "danger",
+      })
+    );
+    history.push("/login");
+  }
+};
+
+export const deletePost = async (
+  dispatch: Dispatch,
+  history: any,
+  postID: string
+) => {
+  if (localStorage.getItem("token")) {
+    try {
+      if (window.confirm("Are you sure you want to delete your post?")) {
+        const res = await fetch(
+          `${process.env.REACT_APP_API_URL}/posts/${postID}`,
+          {
+            method: "DELETE",
+            headers: {
+              "x-auth-token": localStorage.getItem("token")!,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await res.json();
+        if (res.status > 300) {
+          dispatch(
+            setAlert({
+              msg: data.msg,
+              alertType: "danger",
+            })
+          );
+        } else {
+          dispatch(
+            setAlert({
+              msg: data.msg,
+              alertType: "success",
+            })
+          );
+          getPosts(dispatch, history);
+        }
       }
     } catch (error: any) {
       console.log(error);

@@ -10,10 +10,10 @@ const Posts = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const posts = useSelector(selectPosts);
-  console.log(posts);
+
   useEffect(() => {
     getPosts(dispatch, history);
-  }, [posts, dispatch, history]);
+  }, [dispatch, history]);
 
   return (
     <>
