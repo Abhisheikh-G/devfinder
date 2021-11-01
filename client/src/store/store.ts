@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import alertReducer from "src/slices/alertSlice";
 import authReducer from "src/slices/authSlice";
 import profileReducer from "src/slices/profileSlice";
-
+import postReducer from "src/slices/postSlice";
 // import { composeWithDevTools } from "redux-devtools-extension";
 // ...
 
@@ -15,6 +15,7 @@ export const store = configureStore({
     alert: alertReducer,
     auth: authReducer,
     profile: profileReducer,
+    post: postReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(middleware),

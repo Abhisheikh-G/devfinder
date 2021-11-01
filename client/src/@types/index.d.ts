@@ -41,3 +41,14 @@ export interface Education {
   description: string;
   _id?: string;
 }
+
+export interface Post {
+  _id?: string;
+  user: string;
+  text: string;
+  name: string;
+  avatar: string;
+  date: string;
+  likes: [];
+  comments: [];
+}

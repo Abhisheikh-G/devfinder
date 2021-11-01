@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store/store";
+import { removePosts } from "src/slices/postSlice";
 import { signUserOut } from "src/slices/authSlice";
 import { removeCurrentProfile } from "src/slices/profileSlice";
 import { useEffect } from "react";
@@ -12,6 +13,7 @@ function Navbar() {
   );
 
   const handleSignOut = () => {
+    dispatch(removePosts());
     dispatch(signUserOut());
     dispatch(removeCurrentProfile());
   };
@@ -38,6 +40,9 @@ function Navbar() {
           </>
         ) : (
           <>
+            <li>
+              <Link to="/posts">Posts</Link>
+            </li>
             <li>
               <Link to="/dashboard">Dashboard</Link>
             </li>
