@@ -1,5 +1,5 @@
 import { setAlert } from "src/slices/alertSlice";
-import { setPosts, updateLikes } from "src/slices/postSlice";
+import { setPosts, updateLikes, setPost } from "src/slices/postSlice";
 import { Dispatch } from "redux";
 
 export const getPosts = async (dispatch: Dispatch, history: any) => {
@@ -21,6 +21,45 @@ export const getPosts = async (dispatch: Dispatch, history: any) => {
         );
       } else {
         dispatch(setPosts(data));
+      }
+    } catch (error: any) {
+      dispatch(
+        setAlert({
+          msg: "Unable to get posts at this time.",
+          alertType: "danger",
+        })
+      );
+    }
+  } else {
+    dispatch(
+      setAlert({
+        msg: "You are unauthorized to do that..",
+        alertType: "danger",
+      })
+    );
+    history.push("/login");
+  }
+};
+
+export const getPost = async (dispatch: Dispatch, history: any, id: string) => {
+  if (localStorage.getItem("token")) {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`, {
+        headers: {
+          "x-auth-token": localStorage.getItem("token")!,
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if (res.status > 300) {
+        dispatch(
+          setAlert({
+            msg: data.msg,
+            alertType: "danger",
+          })
+        );
+      } else {
+        dispatch(setPost(data));
       }
     } catch (error: any) {
       dispatch(

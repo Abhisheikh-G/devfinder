@@ -17,6 +17,9 @@ export const postSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
+    setPost: (state, action: PayloadAction<Post>) => {
+      state.post = action.payload;
+    },
     setPosts: (state, action: PayloadAction<Post[]>) => {
       state.posts = action.payload;
     },
@@ -36,9 +39,11 @@ export const postSlice = createSlice({
   },
 });
 
-export const { setPosts, removePosts, updateLikes } = postSlice.actions;
+export const { setPosts, removePosts, updateLikes, setPost } =
+  postSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectPosts = (state: RootState) => state.post.posts;
+export const selectPost = (state: RootState) => state.post.post;
 
 export default postSlice.reducer;
