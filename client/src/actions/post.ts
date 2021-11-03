@@ -74,6 +74,7 @@ export const addLike = async (
           })
         );
         dispatch(updateLikes(data));
+        getPosts(dispatch, history);
       }
     } catch (error: any) {
       dispatch(
@@ -127,9 +128,9 @@ export const removeLike = async (
           })
         );
         dispatch(updateLikes(data));
+        getPosts(dispatch, history);
       }
     } catch (error: any) {
-      console.log(error);
       dispatch(
         setAlert({
           msg: "Unable to get posts at this time.",
@@ -186,6 +187,58 @@ export const deletePost = async (
       }
     } catch (error: any) {
       console.log(error);
+      dispatch(
+        setAlert({
+          msg: "Unable to get posts at this time.",
+          alertType: "danger",
+        })
+      );
+    }
+  } else {
+    dispatch(
+      setAlert({
+        msg: "You are unauthorized to do that..",
+        alertType: "danger",
+      })
+    );
+    history.push("/login");
+  }
+};
+
+export const addPost = async (
+  dispatch: Dispatch,
+  history: any,
+  formData: string
+) => {
+  if (localStorage.getItem("token")) {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/posts`, {
+        method: "POST",
+        headers: {
+          "x-auth-token": localStorage.getItem("token")!,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: formData }),
+      });
+      const data = await res.json();
+      console.log(data);
+      if (res.status > 300) {
+        dispatch(
+          setAlert({
+            msg: data.msg,
+            alertType: "danger",
+          })
+        );
+      } else {
+        dispatch(
+          setAlert({
+            msg: "You created a new post.",
+            alertType: "success",
+          })
+        );
+        getPosts(dispatch, history);
+      }
+    } catch (error: any) {
       dispatch(
         setAlert({
           msg: "Unable to get posts at this time.",
