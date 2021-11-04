@@ -50,5 +50,14 @@ export interface Post {
   avatar: string;
   date: string;
   likes: string[];
-  comments: string[];
+  comments: [IComment];
+}
+
+export interface IComment {
+  user: string;
+  text: string;
+  name: string;
+  avatar: string;
+  date: string;
+  _id: string;
 }

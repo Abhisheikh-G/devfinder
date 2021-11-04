@@ -295,3 +295,117 @@ export const addPost = async (
     history.push("/login");
   }
 };
+
+export const addComment = async (
+  dispatch: Dispatch,
+  history: any,
+  formData: string,
+  id: string
+) => {
+  if (localStorage.getItem("token")) {
+    try {
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/posts/comment/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "x-auth-token": localStorage.getItem("token")!,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ text: formData }),
+        }
+      );
+      const data = await res.json();
+      console.log(data);
+      if (res.status > 300) {
+        dispatch(
+          setAlert({
+            msg: data.msg,
+            alertType: "danger",
+          })
+        );
+      } else {
+        dispatch(
+          setAlert({
+            msg: "You created a new post.",
+            alertType: "success",
+          })
+        );
+        getPost(dispatch, history, id);
+      }
+    } catch (error: any) {
+      dispatch(
+        setAlert({
+          msg: "Unable to get posts at this time.",
+          alertType: "danger",
+        })
+      );
+    }
+  } else {
+    dispatch(
+      setAlert({
+        msg: "You are unauthorized to do that..",
+        alertType: "danger",
+      })
+    );
+    history.push("/login");
+  }
+};
+
+export const deleteComment = async (
+  dispatch: Dispatch,
+  history: any,
+  postID: string,
+  commentID: string
+) => {
+  if (localStorage.getItem("token")) {
+    try {
+      if (window.confirm("Are you sure you want to delete this comment?")) {
+        const res = await fetch(
+          `${process.env.REACT_APP_API_URL}/posts/comment/${postID}/${commentID}`,
+          {
+            method: "DELETE",
+            headers: {
+              "x-auth-token": localStorage.getItem("token")!,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id: postID, comment_id: commentID }),
+          }
+        );
+        const data = await res.json();
+
+        if (res.status > 300) {
+          dispatch(
+            setAlert({
+              msg: data.msg,
+              alertType: "danger",
+            })
+          );
+        } else {
+          dispatch(
+            setAlert({
+              msg: "You created a new post.",
+              alertType: "success",
+            })
+          );
+          getPost(dispatch, history, postID);
+        }
+      }
+    } catch (error: any) {
+      dispatch(
+        setAlert({
+          msg: "Unable to get posts at this time.",
+          alertType: "danger",
+        })
+      );
+    }
+  } else {
+    dispatch(
+      setAlert({
+        msg: "You are unauthorized to do that..",
+        alertType: "danger",
+      })
+    );
+    history.push("/login");
+  }
+};
