@@ -46,7 +46,7 @@ const LogIn = () => {
       );
     } else {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/auth`, {
+        const res = await fetch(`/api/auth`, {
           method: "POST",
           body: JSON.stringify({ email, password }),
           headers: {
