@@ -21,7 +21,7 @@ export async function getCurrentProfile({
   redirect = true,
 }: GetUserProps) {
   if (localStorage.getItem("token")) {
-    const res = await fetch(`/profile/me`, {
+    const res = await fetch(`/api/profile/me`, {
       method: "GET",
       headers: {
         "x-auth-token": localStorage.getItem("token")!,
@@ -63,7 +63,7 @@ export async function getProfiles({
   history,
   redirect = true,
 }: GetUserProps) {
-  const res = await fetch(`/profile`, {
+  const res = await fetch(`/api/profile`, {
     method: "GET",
   });
   const data = await res.json();
@@ -84,7 +84,7 @@ export async function getProfileByID({
   _id,
   redirect = true,
 }: GetUserProps) {
-  const res = await fetch(`/profile/user/${_id}`, {
+  const res = await fetch(`/api/profile/user/${_id}`, {
     method: "GET",
   });
   const data = await res.json();
@@ -97,7 +97,7 @@ export async function getProfileByID({
 }
 
 export async function getGithubRepos({ dispatch, username }: GetUserProps) {
-  const res = await fetch(`/profile/github/${username}`, {
+  const res = await fetch(`/api/profile/github/${username}`, {
     method: "GET",
   });
   const data = await res.json();
@@ -123,7 +123,7 @@ export async function createProfile({
   history,
 }: CreateProfileProps) {
   if (localStorage.getItem("token")) {
-    const res = await fetch(`/profile`, {
+    const res = await fetch(`/api/profile`, {
       method: "POST",
       headers: {
         "x-auth-token": localStorage.getItem("token")!,
@@ -170,7 +170,7 @@ export async function createExperience({
   history,
 }: CreateProfileProps) {
   if (localStorage.getItem("token")) {
-    const res = await fetch(`/profile/experience`, {
+    const res = await fetch(`/api/profile/experience`, {
       method: "PUT",
       headers: {
         "x-auth-token": localStorage.getItem("token")!,
@@ -220,7 +220,7 @@ export async function createEducation({
   history,
 }: CreateProfileProps) {
   if (localStorage.getItem("token")) {
-    const res = await fetch(`/profile/education`, {
+    const res = await fetch(`/api/profile/education`, {
       method: "PUT",
       headers: {
         "x-auth-token": localStorage.getItem("token")!,
@@ -273,7 +273,7 @@ export async function deleteEducation({
   history,
 }: DeleteProfileProps) {
   if (localStorage.getItem("token")) {
-    const res = await fetch(`/profile/education/${_id}`, {
+    const res = await fetch(`/api/profile/education/${_id}`, {
       method: "DELETE",
       headers: {
         "x-auth-token": localStorage.getItem("token")!,
@@ -319,7 +319,7 @@ export async function deleteExperience({
   history,
 }: DeleteProfileProps) {
   if (localStorage.getItem("token")) {
-    const res = await fetch(`/profile/experience/${_id}`, {
+    const res = await fetch(`/api/profile/experience/${_id}`, {
       method: "DELETE",
       headers: {
         "x-auth-token": localStorage.getItem("token")!,
@@ -361,7 +361,7 @@ export async function deleteExperience({
 
 export async function deleteProfile({ dispatch, history }: DeleteProfileProps) {
   if (localStorage.getItem("token")) {
-    const res = await fetch(`/profile/`, {
+    const res = await fetch(`/api/profile/`, {
       method: "DELETE",
       headers: {
         "x-auth-token": localStorage.getItem("token")!,

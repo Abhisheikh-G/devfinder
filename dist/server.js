@@ -13,7 +13,7 @@ var profile_1 = __importDefault(require("./routes/api/profile"));
 var cors_1 = __importDefault(require("cors"));
 var path_1 = __importDefault(require("path"));
 dotenv_1.default.config();
-var PORT = process.env.PORT || 5000;
+var PORT = 5000;
 var app = (0, express_1.default)();
 (0, db_1.connectDB)();
 //Init Middleware

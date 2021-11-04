@@ -5,7 +5,7 @@ import { Dispatch } from "redux";
 export const getPosts = async (dispatch: Dispatch, history: any) => {
   if (localStorage.getItem("token")) {
     try {
-      const res = await fetch(`/posts`, {
+      const res = await fetch(`/api/posts`, {
         headers: {
           "x-auth-token": localStorage.getItem("token")!,
           "Content-Type": "application/json",
@@ -44,7 +44,7 @@ export const getPosts = async (dispatch: Dispatch, history: any) => {
 export const getPost = async (dispatch: Dispatch, history: any, id: string) => {
   if (localStorage.getItem("token")) {
     try {
-      const res = await fetch(`/posts/${id}`, {
+      const res = await fetch(`/api/posts/${id}`, {
         headers: {
           "x-auth-token": localStorage.getItem("token")!,
           "Content-Type": "application/json",
@@ -87,7 +87,7 @@ export const addLike = async (
 ) => {
   if (localStorage.getItem("token")) {
     try {
-      const res = await fetch(`/posts/like/${postID}`, {
+      const res = await fetch(`/api/posts/like/${postID}`, {
         method: "PUT",
         headers: {
           "x-auth-token": localStorage.getItem("token")!,
@@ -138,7 +138,7 @@ export const removeLike = async (
 ) => {
   if (localStorage.getItem("token")) {
     try {
-      const res = await fetch(`/posts/unlike/${postID}`, {
+      const res = await fetch(`/api/posts/unlike/${postID}`, {
         method: "PUT",
         headers: {
           "x-auth-token": localStorage.getItem("token")!,
@@ -190,7 +190,7 @@ export const deletePost = async (
   if (localStorage.getItem("token")) {
     try {
       if (window.confirm("Are you sure you want to delete your post?")) {
-        const res = await fetch(`/posts/${postID}`, {
+        const res = await fetch(`/api/posts/${postID}`, {
           method: "DELETE",
           headers: {
             "x-auth-token": localStorage.getItem("token")!,
@@ -242,7 +242,7 @@ export const addPost = async (
 ) => {
   if (localStorage.getItem("token")) {
     try {
-      const res = await fetch(`/posts`, {
+      const res = await fetch(`/api/posts`, {
         method: "POST",
         headers: {
           "x-auth-token": localStorage.getItem("token")!,
@@ -295,7 +295,7 @@ export const addComment = async (
 ) => {
   if (localStorage.getItem("token")) {
     try {
-      const res = await fetch(`/posts/comment/${id}`, {
+      const res = await fetch(`/api/posts/comment/${id}`, {
         method: "POST",
         headers: {
           "x-auth-token": localStorage.getItem("token")!,
@@ -349,7 +349,7 @@ export const deleteComment = async (
   if (localStorage.getItem("token")) {
     try {
       if (window.confirm("Are you sure you want to delete this comment?")) {
-        const res = await fetch(`/posts/comment/${postID}/${commentID}`, {
+        const res = await fetch(`/api/posts/comment/${postID}/${commentID}`, {
           method: "DELETE",
           headers: {
             "x-auth-token": localStorage.getItem("token")!,
