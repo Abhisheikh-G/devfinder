@@ -31,7 +31,7 @@ const Profiles = () => {
                 <h2>{profile.user!.name}</h2>
                 <p>
                   {profile.status}
-                  {profile.company && <span>at {profile.company} </span>}
+                  {profile.company && <span> at {profile.company} </span>}
                 </p>
                 <p>{profile.location && profile.location}</p>
                 <Link
