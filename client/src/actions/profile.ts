@@ -21,7 +21,7 @@ export async function getCurrentProfile({
   redirect = true,
 }: GetUserProps) {
   if (localStorage.getItem("token")) {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/profile/me`, {
+    const res = await fetch(`/profile/me`, {
       method: "GET",
       headers: {
         "x-auth-token": localStorage.getItem("token")!,
@@ -63,7 +63,7 @@ export async function getProfiles({
   history,
   redirect = true,
 }: GetUserProps) {
-  const res = await fetch(`${process.env.REACT_APP_API_URL}/profile`, {
+  const res = await fetch(`/profile`, {
     method: "GET",
   });
   const data = await res.json();
@@ -84,12 +84,9 @@ export async function getProfileByID({
   _id,
   redirect = true,
 }: GetUserProps) {
-  const res = await fetch(
-    `${process.env.REACT_APP_API_URL}/profile/user/${_id}`,
-    {
-      method: "GET",
-    }
-  );
+  const res = await fetch(`/profile/user/${_id}`, {
+    method: "GET",
+  });
   const data = await res.json();
   if (res.status > 400) {
     dispatch(setAlert({ alertType: "danger", msg: data.msg }));
@@ -100,12 +97,9 @@ export async function getProfileByID({
 }
 
 export async function getGithubRepos({ dispatch, username }: GetUserProps) {
-  const res = await fetch(
-    `${process.env.REACT_APP_API_URL}/profile/github/${username}`,
-    {
-      method: "GET",
-    }
-  );
+  const res = await fetch(`/profile/github/${username}`, {
+    method: "GET",
+  });
   const data = await res.json();
   if (res.status > 400) {
     dispatch(setAlert({ alertType: "danger", msg: data.msg }));
@@ -129,7 +123,7 @@ export async function createProfile({
   history,
 }: CreateProfileProps) {
   if (localStorage.getItem("token")) {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/profile`, {
+    const res = await fetch(`/profile`, {
       method: "POST",
       headers: {
         "x-auth-token": localStorage.getItem("token")!,
@@ -176,19 +170,16 @@ export async function createExperience({
   history,
 }: CreateProfileProps) {
   if (localStorage.getItem("token")) {
-    const res = await fetch(
-      `${process.env.REACT_APP_API_URL}/profile/experience`,
-      {
-        method: "PUT",
-        headers: {
-          "x-auth-token": localStorage.getItem("token")!,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-        }),
-      }
-    );
+    const res = await fetch(`/profile/experience`, {
+      method: "PUT",
+      headers: {
+        "x-auth-token": localStorage.getItem("token")!,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...formData,
+      }),
+    });
     const data = await res.json();
 
     const { errors } = data;
@@ -229,19 +220,16 @@ export async function createEducation({
   history,
 }: CreateProfileProps) {
   if (localStorage.getItem("token")) {
-    const res = await fetch(
-      `${process.env.REACT_APP_API_URL}/profile/education`,
-      {
-        method: "PUT",
-        headers: {
-          "x-auth-token": localStorage.getItem("token")!,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-        }),
-      }
-    );
+    const res = await fetch(`/profile/education`, {
+      method: "PUT",
+      headers: {
+        "x-auth-token": localStorage.getItem("token")!,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...formData,
+      }),
+    });
     const data = await res.json();
 
     const { errors } = data;
@@ -285,16 +273,13 @@ export async function deleteEducation({
   history,
 }: DeleteProfileProps) {
   if (localStorage.getItem("token")) {
-    const res = await fetch(
-      `${process.env.REACT_APP_API_URL}/profile/education/${_id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "x-auth-token": localStorage.getItem("token")!,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const res = await fetch(`/profile/education/${_id}`, {
+      method: "DELETE",
+      headers: {
+        "x-auth-token": localStorage.getItem("token")!,
+        "Content-Type": "application/json",
+      },
+    });
     const data = await res.json();
 
     const { errors } = data;
@@ -334,16 +319,13 @@ export async function deleteExperience({
   history,
 }: DeleteProfileProps) {
   if (localStorage.getItem("token")) {
-    const res = await fetch(
-      `${process.env.REACT_APP_API_URL}/profile/experience/${_id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "x-auth-token": localStorage.getItem("token")!,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const res = await fetch(`/profile/experience/${_id}`, {
+      method: "DELETE",
+      headers: {
+        "x-auth-token": localStorage.getItem("token")!,
+        "Content-Type": "application/json",
+      },
+    });
     const data = await res.json();
 
     const { errors } = data;
@@ -379,7 +361,7 @@ export async function deleteExperience({
 
 export async function deleteProfile({ dispatch, history }: DeleteProfileProps) {
   if (localStorage.getItem("token")) {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/profile/`, {
+    const res = await fetch(`/profile/`, {
       method: "DELETE",
       headers: {
         "x-auth-token": localStorage.getItem("token")!,

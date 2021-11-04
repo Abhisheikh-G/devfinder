@@ -5,7 +5,7 @@ import { Dispatch } from "redux";
 export const getPosts = async (dispatch: Dispatch, history: any) => {
   if (localStorage.getItem("token")) {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/posts`, {
+      const res = await fetch(`/posts`, {
         headers: {
           "x-auth-token": localStorage.getItem("token")!,
           "Content-Type": "application/json",
@@ -44,7 +44,7 @@ export const getPosts = async (dispatch: Dispatch, history: any) => {
 export const getPost = async (dispatch: Dispatch, history: any, id: string) => {
   if (localStorage.getItem("token")) {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`, {
+      const res = await fetch(`/posts/${id}`, {
         headers: {
           "x-auth-token": localStorage.getItem("token")!,
           "Content-Type": "application/json",
@@ -87,16 +87,13 @@ export const addLike = async (
 ) => {
   if (localStorage.getItem("token")) {
     try {
-      const res = await fetch(
-        `${process.env.REACT_APP_API_URL}/posts/like/${postID}`,
-        {
-          method: "PUT",
-          headers: {
-            "x-auth-token": localStorage.getItem("token")!,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await fetch(`/posts/like/${postID}`, {
+        method: "PUT",
+        headers: {
+          "x-auth-token": localStorage.getItem("token")!,
+          "Content-Type": "application/json",
+        },
+      });
       const data = await res.json();
       if (res.status > 300) {
         dispatch(
@@ -141,16 +138,13 @@ export const removeLike = async (
 ) => {
   if (localStorage.getItem("token")) {
     try {
-      const res = await fetch(
-        `${process.env.REACT_APP_API_URL}/posts/unlike/${postID}`,
-        {
-          method: "PUT",
-          headers: {
-            "x-auth-token": localStorage.getItem("token")!,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await fetch(`/posts/unlike/${postID}`, {
+        method: "PUT",
+        headers: {
+          "x-auth-token": localStorage.getItem("token")!,
+          "Content-Type": "application/json",
+        },
+      });
       const data = await res.json();
       if (res.status > 300) {
         dispatch(
@@ -196,16 +190,13 @@ export const deletePost = async (
   if (localStorage.getItem("token")) {
     try {
       if (window.confirm("Are you sure you want to delete your post?")) {
-        const res = await fetch(
-          `${process.env.REACT_APP_API_URL}/posts/${postID}`,
-          {
-            method: "DELETE",
-            headers: {
-              "x-auth-token": localStorage.getItem("token")!,
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const res = await fetch(`/posts/${postID}`, {
+          method: "DELETE",
+          headers: {
+            "x-auth-token": localStorage.getItem("token")!,
+            "Content-Type": "application/json",
+          },
+        });
         const data = await res.json();
         if (res.status > 300) {
           dispatch(
@@ -251,7 +242,7 @@ export const addPost = async (
 ) => {
   if (localStorage.getItem("token")) {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/posts`, {
+      const res = await fetch(`/posts`, {
         method: "POST",
         headers: {
           "x-auth-token": localStorage.getItem("token")!,
@@ -304,17 +295,14 @@ export const addComment = async (
 ) => {
   if (localStorage.getItem("token")) {
     try {
-      const res = await fetch(
-        `${process.env.REACT_APP_API_URL}/posts/comment/${id}`,
-        {
-          method: "POST",
-          headers: {
-            "x-auth-token": localStorage.getItem("token")!,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ text: formData }),
-        }
-      );
+      const res = await fetch(`/posts/comment/${id}`, {
+        method: "POST",
+        headers: {
+          "x-auth-token": localStorage.getItem("token")!,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: formData }),
+      });
       const data = await res.json();
       console.log(data);
       if (res.status > 300) {
@@ -361,17 +349,14 @@ export const deleteComment = async (
   if (localStorage.getItem("token")) {
     try {
       if (window.confirm("Are you sure you want to delete this comment?")) {
-        const res = await fetch(
-          `${process.env.REACT_APP_API_URL}/posts/comment/${postID}/${commentID}`,
-          {
-            method: "DELETE",
-            headers: {
-              "x-auth-token": localStorage.getItem("token")!,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ id: postID, comment_id: commentID }),
-          }
-        );
+        const res = await fetch(`/posts/comment/${postID}/${commentID}`, {
+          method: "DELETE",
+          headers: {
+            "x-auth-token": localStorage.getItem("token")!,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: postID, comment_id: commentID }),
+        });
         const data = await res.json();
 
         if (res.status > 300) {

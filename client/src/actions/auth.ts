@@ -12,7 +12,7 @@ export async function getUser({
   redirect = true,
 }: GetUserProps) {
   if (localStorage.getItem("token")) {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/auth`, {
+    const res = await fetch(`/auth`, {
       headers: {
         "x-auth-token": localStorage.getItem("token")!,
       },
